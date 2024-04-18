@@ -3,11 +3,9 @@ package com.example.android_expert_assignment
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.android_expert_assignment.data.DataList
 import com.example.android_expert_assignment.data.ItemData
 import com.example.android_expert_assignment.databinding.ActivityDetailPageBinding
 import java.text.DecimalFormat
@@ -41,7 +39,6 @@ class DetailPageActivity : AppCompatActivity() {
 
     private fun bindingItem(item: ItemData) {
         val price = decimal.format(item.price) + "원"
-
         binding.ivItem.setImageResource(item.image)
         binding.tvSeller.setText(item.seller)
         binding.tvAddress.setText(item.address)
