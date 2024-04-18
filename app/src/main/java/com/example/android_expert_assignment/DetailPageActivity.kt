@@ -12,7 +12,7 @@ import java.text.DecimalFormat
 
 class DetailPageActivity : AppCompatActivity() {
     private val decimal = DecimalFormat("#,##0")
-    private val binding by lazy{ ActivityDetailPageBinding.inflate(layoutInflater)}
+    private val binding by lazy { ActivityDetailPageBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +28,12 @@ class DetailPageActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra<ItemData>("data")
         }
+
         item?.let{
             bindingItem(it)
         }
 
         pressedReturnButton()
-
 
     }
 
