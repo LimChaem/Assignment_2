@@ -1,56 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/itemIV"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:padding="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:id="@+id/itemIV"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background" />
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
 
         <TextView
             android:id="@+id/itemName"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="가나다"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textStyle="bold"
+            android:layout_marginStart="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="가나다" />
 
         <TextView
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="가나다"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemName" />
+            app:layout_constraintStart_toStartOf="@id/itemName"
+            app:layout_constraintTop_toBottomOf="@id/itemName"
+            tools:text="가나다" />
 
         <TextView
             android:id="@+id/itemPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="라마바사"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/address"
-            app:layout_constraintTop_toBottomOf="@id/address" />
+            app:layout_constraintTop_toBottomOf="@id/address"
+            tools:text="가나다" />
 
 
         <ImageView
             android:id="@+id/IV_Comment"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/chat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/itemComment" />
 
@@ -60,15 +70,15 @@
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
             android:gravity="center"
-            android:text="5"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/IV_like" />
+            app:layout_constraintEnd_toStartOf="@id/IV_like"
+            tools:text="5" />
 
         <ImageView
             android:id="@+id/IV_like"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/heart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/itemLike" />
 
@@ -77,10 +87,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:gravity="center"
-            android:text="22"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="22" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

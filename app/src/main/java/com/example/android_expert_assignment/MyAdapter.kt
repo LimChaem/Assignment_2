@@ -1,33 +1,40 @@
 package com.example.android_expert_assignment
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.android_expert_assignment.data.ItemData
 import com.example.android_expert_assignment.databinding.ItemRecyclerviewBinding
+import java.text.DecimalFormat
 
 class MyAdapter(private val item: MutableList<ItemData>) : Adapter<MyAdapter.Holder>() {
+
+    interface ItemClick {
+        fun onClick(view: View, position: Int)
+    }
+
+    private val decimal = DecimalFormat("#,###")
+
+
+    var itemClick: ItemClick? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.Holder {
         val binding =
             ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.itemName
         return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: MyAdapter.Holder, position: Int) {
-        holder.itemIV.setImageResource(item[position].image)
-        // 저장된 정보가 리소스 타입이라 Int를 받아야해서 이게 안됨.
-        // holder.itemName.text = item[position].itemName
 
+        val price = decimal.format(item[position].price) + "원"
+        holder.itemIV.setImageResource(item[position].image)
         holder.itemName.setText(item[position].itemName)
         holder.address.setText(item[position].address)
-        holder.itemPrice.setText(item[position].price)
-        holder.itemComment.text = item[position].chatting.toString()
-        holder.itemLike.text = item[position].like.toString()
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+        holder.itemPrice.text = price
+        holder.itemComment.text = decimal.format(item[position].chatting)
+        holder.itemLike.text = decimal.format(item[position].like)
     }
 
     override fun getItemCount(): Int {
@@ -36,6 +43,13 @@ class MyAdapter(private val item: MutableList<ItemData>) : Adapter<MyAdapter.Hol
 
     inner class Holder(binding: ItemRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                itemClick?.onClick(it, position)
+            }
+        }
+
         val itemIV = binding.itemIV
         val itemName = binding.itemName
         val address = binding.address

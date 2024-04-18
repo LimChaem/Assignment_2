@@ -1,16 +1,21 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-parcelize")
+
 }
 
 android {
     namespace = "com.example.android_expert_assignment"
     compileSdk = 34
 
+
+
     defaultConfig {
         applicationId = "com.example.android_expert_assignment"
-        minSdk = 27
+        minSdk = 26
         targetSdk = 34
+
         versionCode = 1
         versionName = "1.0"
 
@@ -36,10 +41,10 @@ android {
     buildFeatures{
         viewBinding = true
     }
+
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,4 +53,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }
