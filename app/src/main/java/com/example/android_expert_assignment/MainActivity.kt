@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
 
         onClickItem()
 
+        onClickedFloatingButton()
+
     }
 
     private fun clickedNotification() {
@@ -137,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showDialog() {
+    private fun showDialog() {
         Log.d(TAG, "showDialog() called")
         AlertDialog.Builder(this).setTitle("종료").setMessage("정말로 종료하시겠습니까?")
             .setIcon(R.mipmap.ic_launcher).setPositiveButton("예") { dialog, which ->
@@ -166,6 +168,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun onClickedFloatingButton(){
+        binding.fab.setOnClickListener {
+            binding.recyclerView.smoothScrollToPosition(0)
         }
     }
 }
