@@ -49,7 +49,6 @@ class MyAdapter(private val item: MutableList<ItemData>) : Adapter<MyAdapter.Hol
                 itemClick?.onClick(it, position)
             }
         }
-
         val itemIV = binding.itemIV
         val itemName = binding.itemName
         val address = binding.address

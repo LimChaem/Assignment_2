@@ -3,16 +3,17 @@ package com.example.android_expert_assignment
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -36,7 +37,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    val TAG = "backButton"
+    private val TAG = "backButton"
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +53,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        pressedBackButton()
+        initFun()
 
-        clickedNotification()
-
-        onClickItem()
+        val recyclerViewScrollListener = RecyclerViewScrollListener(binding.fab)
+        binding.recyclerView.addOnScrollListener(recyclerViewScrollListener)
 
     }
+
+    private fun initFun() {
+        pressedBackButton()
+        clickedNotification()
+        initRecyclerView()
+        setUpSpinner()
+        pressedFloatingButton()
+    }
+
 
     private fun clickedNotification() {
         binding.notificationIV.setOnClickListener {
@@ -69,9 +80,9 @@ class MainActivity : AppCompatActivity() {
 
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val builder: NotificationCompat.Builder
-        if (Build.VERSION.SDK_INT >= 27) {
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
             val channelId = "one-channel"
-            val channelName = "애플마켓"
+            val channelName = R.string.app_name.toString()
             val channel = NotificationChannel(
                 channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
@@ -90,18 +101,13 @@ class MainActivity : AppCompatActivity() {
             builder = NotificationCompat.Builder(this)
         }
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
         builder.run {
             setSmallIcon(R.drawable.bell_2)
             setWhen(System.currentTimeMillis())
             setContentTitle("키워드 알림")
             setContentText("설정한 키워드에 대한 알림이 도착했습니다.")
         }
-        manager.notify(1, builder.build())
+        manager.notify(11, builder.build())
     }
 
     private fun checkPermissions() {
@@ -117,8 +123,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun pressedBackButton() {
         // onBackPressed()가 deprecate 됨에 따라 Target API 33 이상 사용.
-        // 다만 Target API가 33 이상에서 효용성을 갖기 위해선 아직 시간이 많이 걸릴 것임.
-        // 그래서 onBackPressedDispatcher를 통해 callBack을 처리하여 사용함. (얘는 범용 적용)
+        // 다만 Target API가 33 이상 이라는 조건을 충족 하기 위해선 아직 시간이 많이 걸릴 것임.
+        // 그래서 onBackPressedDispatcher를 통해 callback을 처리하여 사용함. (얘는 범용 적용)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             try {
                 onBackInvokedDispatcher.registerOnBackInvokedCallback(
@@ -139,19 +145,22 @@ class MainActivity : AppCompatActivity() {
 
     fun showDialog() {
         Log.d(TAG, "showDialog() called")
-        AlertDialog.Builder(this).setTitle("종료").setMessage("정말로 종료하시겠습니까?")
-            .setIcon(R.mipmap.ic_launcher).setPositiveButton("예") { dialog, which ->
+        AlertDialog.Builder(this)
+            .setTitle("종료")
+            .setMessage("정말로 종료하시겠습니까?")
+            .setIcon(R.drawable.chat)
+            .setPositiveButton("예") { _, _ ->
                 Log.d(TAG, "Dialog: Yes clicked")
                 finish()
-            }.setNegativeButton("아니요") { dialog, which ->
+            }
+            .setNegativeButton("아니요") { dial, _ ->
                 Log.d(TAG, "Dialog: No clicked")
-                dialog.dismiss()
+
             }.show()
         Log.d(TAG, "AlertDialog should be displayed")
     }
 
-    private fun onClickItem() {
-
+    private fun initRecyclerView() {
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         val adapter = MyAdapter(DataList.dataList)
         binding.recyclerView.adapter = adapter
@@ -168,4 +177,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun pressedFloatingButton() {
+        binding.fab.setOnClickListener {
+            binding.recyclerView.smoothScrollToPosition(0)
+        }
+    }
+
+    private fun setUpSpinner() {
+        val category = resources.getStringArray(R.array.category)
+        val adapter = ArrayAdapter(this, R.layout.item_spinner, category)
+        binding.spinnerView.adapter = adapter
+    }
+
 }
+
+

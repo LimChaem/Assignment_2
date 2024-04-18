@@ -1,10 +1,8 @@
 package com.example.android_expert_assignment.data
 
 import com.example.android_expert_assignment.R
-import java.text.DecimalFormat
 
 object DataList {
-    val decimal = DecimalFormat("#,##0")
     val dataList = mutableListOf<ItemData>(
         ItemData(image = R.drawable.sample1, itemName = R.string.item_name01, itemIntroduction = R.string.item_introduction01, seller = R.string.seller01, price = 1000, address = R.string.address01, like = 13, chatting = 25),
         ItemData(image = R.drawable.sample2, itemName = R.string.item_name02, itemIntroduction = R.string.item_introduction02, seller = R.string.seller02, price = 20000, address = R.string.address02, like = 8, chatting = 28),
