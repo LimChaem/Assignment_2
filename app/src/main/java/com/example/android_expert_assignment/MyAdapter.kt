@@ -13,6 +13,7 @@ class MyAdapter(private val item: MutableList<ItemData>) : Adapter<MyAdapter.Hol
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
+        fun onItemLongClick(view: View, position: Int)
     }
 
     private val decimal = DecimalFormat("#,###")
@@ -22,7 +23,6 @@ class MyAdapter(private val item: MutableList<ItemData>) : Adapter<MyAdapter.Hol
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.Holder {
         val binding =
             ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.itemName
         return Holder(binding)
     }
 
@@ -45,8 +45,17 @@ class MyAdapter(private val item: MutableList<ItemData>) : Adapter<MyAdapter.Hol
         RecyclerView.ViewHolder(binding.root) {
 
         init {
+
             itemView.setOnClickListener {
-                itemClick?.onClick(it, position)
+                // onClick에서 position은 deprecate 됨.
+                // item의 포지션이 변경되었을 때 그 포지션이 정확하지 않을 수 있기 때문에 예기지 않은 오류가 발생할 수 도 있다고 함.
+                // 그래서 bindingAdapterPosition을 사용하기를 권장함.
+                itemClick?.onClick(it, bindingAdapterPosition)
+            }
+
+            itemView.setOnLongClickListener {
+                itemClick?.onItemLongClick(it, bindingAdapterPosition)
+                return@setOnLongClickListener(false)
             }
         }
         val itemIV = binding.itemIV

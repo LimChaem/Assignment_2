@@ -39,8 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "backButton"
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -59,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.addOnScrollListener(recyclerViewScrollListener)
 
     }
+
 
     private fun initFun() {
         pressedBackButton()
@@ -145,17 +144,17 @@ class MainActivity : AppCompatActivity() {
 
     fun showDialog() {
         Log.d(TAG, "showDialog() called")
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(this@MainActivity)
             .setTitle("종료")
-            .setMessage("정말로 종료하시겠습니까?")
+            .setMessage("정말 종료 하시겠습니까?")
             .setIcon(R.drawable.chat)
             .setPositiveButton("예") { _, _ ->
                 Log.d(TAG, "Dialog: Yes clicked")
                 finish()
             }
-            .setNegativeButton("아니요") { dial, _ ->
+            .setNegativeButton("아니요") { dialog, _ ->
                 Log.d(TAG, "Dialog: No clicked")
-
+                dialog.dismiss()
             }.show()
         Log.d(TAG, "AlertDialog should be displayed")
     }
@@ -174,6 +173,10 @@ class MainActivity : AppCompatActivity() {
                     putExtra("data", item)
                 }
                 startActivity(intent)
+            }
+
+            override fun onItemLongClick(view: View, position: Int) {
+
             }
         }
     }

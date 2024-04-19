@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/white">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -17,7 +18,7 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/ic_launcher_background" />
 
     </androidx.cardview.widget.CardView>
 
